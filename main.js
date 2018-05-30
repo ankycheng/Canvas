@@ -1,14 +1,17 @@
+/*jshint esversion: 6 */
+// 初始化 Canvas
 var canvas = document.getElementById("mycanvas");
 var ctx = canvas.getContext("2d");
-
 ww = canvas.width = window.innerWidth;
 wh = canvas.height = window.innerHeight;
 
+//當視窗大小變更，更新Canvas
 window.addEventListener("resize", function() {
     ww = canvas.width = window.innerWidth;
     wh = canvas.height = window.innerHeight;
 });
 
+//定義 Ball 位置、速度、加速度、半徑、是否拖曳中
 var Ball = function(){
     this.p = {
         x: ww/2 ,
@@ -25,7 +28,9 @@ var Ball = function(){
     this.r = 50;
     this.dragging = false;
 };
+ctx.arc();
 
+// 在Ball中新增 draw function 
 Ball.prototype.draw = function(){
     ctx.beginPath();
     ctx.save();
@@ -38,6 +43,7 @@ Ball.prototype.draw = function(){
     this.drawV();
 };
 
+//新增 update function, 如果dragging == 'true' 停止執行
 Ball.prototype.update = function(){
     if(ball.dragging == false){
         this.p.x += this.v.x;
@@ -57,6 +63,8 @@ Ball.prototype.update = function(){
     }
 };
 
+// 新增繪製向量圖形
+// moveto vs translate
 Ball.prototype.drawV = function(){
     ctx.beginPath();
     ctx.save();
@@ -83,6 +91,7 @@ Ball.prototype.drawV = function(){
     ctx.restore();
 };
 
+// 新增checkBoundry function
 Ball.prototype.checkBoundary =function() {
     if(this.p.x+this.r>ww){
         this.v.x = -Math.abs(this.v.x);
@@ -98,6 +107,7 @@ Ball.prototype.checkBoundary =function() {
     }
 };
 
+// 初始GUI化控制內容 
 var controls = {
     vx: 0,
     vy: 0,
@@ -180,7 +190,7 @@ canvas.addEventListener("mousedown",function(evt){
 
 canvas.addEventListener("mouseup",()=>{
     ball.dragging = false;
-})
+});
 
 canvas.addEventListener("mousemove",function(evt){
     let nowPos = {
