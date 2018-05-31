@@ -1,7 +1,14 @@
+/*jshint esversion: 6 */
+
 var canvas = document.getElementById('mycanvas');
 var ctx = canvas.getContext("2d");
 ww = canvas.width = window.innerWidth;
 wh = canvas.height = window.innerHeight;
+
+window.addEventListener("resize",()=>{
+  ww = canvas.width = window.innerWidth;
+  wh = canvas.height = window.innerHeight;
+})
 
 function drawVector(v,trans){
   ctx.beginPath();
